@@ -22,7 +22,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import static java.util.Collections.singletonList;
 
 @Configuration
-@EnableMongoRepositories(basePackageClasses = PersonRepo.class, mongoTemplateRef = "primaryMongoTemplate")
+@EnableMongoRepositories(/*basePackages = "com.baeldung.repository")*/basePackageClasses = PersonRepo.class, mongoTemplateRef = "primaryMongoTemplate")
 @EnableConfigurationProperties
 public class MongoConfig {
     @Value("spring.data.mongodb.primary.host")
