@@ -25,19 +25,21 @@ import static java.util.Collections.singletonList;
 @EnableMongoRepositories(/*basePackages = "com.baeldung.repository")*/basePackageClasses = PersonRepo.class, mongoTemplateRef = "primaryMongoTemplate")
 @EnableConfigurationProperties
 public class MongoConfig {
-    @Value("spring.data.mongodb.primary.host")
+    @Value("${spring.data.mongodb.primary.host}")
     private String host;
-    @Value("spring.data.mongodb.primary.port")
-    private String port;
+    @Value("${spring.data.mongodb.primary.port}")
+    private Integer port;
+    @Value("${spring.data.mongodb.primary.database}")
+    private String database;
 
     @Bean(name = "primaryProperties")
     @ConfigurationProperties(prefix = "mongodb.primary")
     @Primary
     public MongoProperties primaryProperties() {
-        MongoProperties mongoProperties= new MongoProperties();
-        mongoProperties.setHost("localhost");
-        mongoProperties.setPort(27017);
-        mongoProperties.setDatabase("employee_management");
+        MongoProperties mongoProperties = new MongoProperties();
+        mongoProperties.setHost(host);
+        mongoProperties.setPort(port);
+        mongoProperties.setDatabase(database);
         return mongoProperties;
     }
 
@@ -50,14 +52,12 @@ public class MongoConfig {
 //        builder.credential(credential);
         MongoClientSettings mongoClientSettings = builder.build();
 
-        MongoClient mongoClient = MongoClients.create(mongoClientSettings);
-        return mongoClient;
+        return MongoClients.create(mongoClientSettings);
     }
 
     @Primary
     @Bean(name = "primaryMongoDBFactory")
-    public MongoDatabaseFactory mongoDatabaseFactory(
-            @Qualifier("primaryMongoClient") MongoClient mongoClient, @Qualifier("primaryProperties") MongoProperties mongoProperties) {
+    public MongoDatabaseFactory mongoDatabaseFactory(@Qualifier("primaryMongoClient") MongoClient mongoClient, @Qualifier("primaryProperties") MongoProperties mongoProperties) {
         return new SimpleMongoClientDatabaseFactory(mongoClient, mongoProperties.getDatabase());
     }
 
