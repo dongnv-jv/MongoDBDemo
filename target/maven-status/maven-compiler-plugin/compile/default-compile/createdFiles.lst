@@ -1,0 +1,5 @@
+com\example\mongodemo\document\Person.class
+com\example\mongodemo\controller\PersonController.class
+com\example\mongodemo\repo\PersonRepo.class
+com\example\mongodemo\MongoDemoApplication.class
+com\example\mongodemo\service\PersonService.class

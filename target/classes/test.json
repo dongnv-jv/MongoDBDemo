@@ -1,0 +1,26 @@
+db.users.find(
+{
+  $and: [
+    {
+      age: {
+        $gte: 20,
+        $lte: 30
+      }
+    },
+    {
+      $or: [
+        {
+          country: "USA"
+        },
+        {
+          country: "Canada"
+        }
+      ]
+    }
+  ]
+}
+).sort(
+{
+  age: 1
+}
+)
