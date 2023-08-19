@@ -37,4 +37,8 @@ public class PersonController {
         personService.delete();
         return ResponseEntity.ok("Đã xóa");
     }
+    @GetMapping("/call")
+    public ResponseEntity<?> call() {
+        return ResponseEntity.ok("Đã call");
+    }
 }
